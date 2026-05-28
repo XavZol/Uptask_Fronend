@@ -7,11 +7,12 @@ import Router from './router'
 
 const queryClient = new QueryClient()
 
-createRoot(document.getElementById('root')!).render(
+const root = createRoot(document.getElementById('root')!);
+root.render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <Router /> 
       <ReactQueryDevtools />
     </QueryClientProvider>
   </StrictMode>,
-)
+);
