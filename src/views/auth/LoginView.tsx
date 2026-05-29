@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import type { UserLoginForm } from "@/types/index";
-import ErrorMessage from "@/components/ErrorMessage";
-import { useMutation} from '@tanstack/react-query'
+import type { UserLoginForm } from "../../types";
+import ErrorMessage from "../../components/ErrorMessage";
+import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from "react-router-dom";
-import { authenticateUser } from "@/api/AuthAPI";
+// Corrección: authenticateUser debería venir de tu API, no de un componente visual
+import { authenticateUser } from "../../api/AuthAPI"; 
 import { toast } from "react-toastify";
 
 export default function LoginView() {
@@ -26,6 +27,7 @@ export default function LoginView() {
     })
 
     const handleLogin = (formData: UserLoginForm) => mutate(formData)
+    
     return (
         <>
             <h1 className="text-5xl font-black text-white">Iniciar Sesión</h1>
@@ -46,8 +48,10 @@ export default function LoginView() {
                     <input
                         id="email"
                         type="email"
+                        alt="email"
                         placeholder="Email de Registro"
-                        className="w-full p-3  border-gray-300 border"
+                        autoComplete="email" // Corrección añadida
+                        className="w-full p-3 border-gray-300 border"
                         {...register("email", {
                             required: "El Email es obligatorio",
                             pattern: {
@@ -69,7 +73,9 @@ export default function LoginView() {
                     <input
                         type="password"
                         placeholder="Password de Registro"
-                        className="w-full p-3  border-gray-300 border"
+                        alt="password"
+                        autoComplete="current-password" // Corrección añadida
+                        className="w-full p-3 border-gray-300 border"
                         {...register("password", {
                             required: "El Password es obligatorio",
                         })}
@@ -82,7 +88,7 @@ export default function LoginView() {
                 <input
                     type="submit"
                     value='Iniciar Sesión'
-                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white font-black text-xl cursor-pointer"
                 />
             </form>
             <nav className="mt-10 flex flex-col space-y-4">

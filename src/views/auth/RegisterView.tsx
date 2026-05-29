@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "../../components/ErrorMessage";
 import { useMutation} from '@tanstack/react-query'
-import type { userRegistrationForm } from "@/types/index";
+import type { userRegistrationForm } from "../../types/index";
 import { Link } from "react-router-dom";
-import { createAccount } from "@/api/AuthAPI";
+import { createAccount } from "../../api/AuthAPI";
 import { toast } from "react-toastify";
 
 export default function RegisterView() {
@@ -73,7 +73,7 @@ export default function RegisterView() {
                         className="font-normal text-2xl"
                     >Nombre</label>
                     <input
-                        type="name"
+                        type="text"
                         placeholder="Nombre de Registro"
                         className="w-full p-3  border-gray-300 border"
                         {...register("name", {

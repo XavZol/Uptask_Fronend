@@ -1,6 +1,11 @@
-import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {userSchema, type CheckPasswordForm, type ConfirmToken, type ForgotPasswordForm, type NewPasswordForm, type RequestConfirmationCodeForm, type UserLoginForm, type userRegistrationForm } from "../types";
+import api from "../lib/axios";
+
+type UpdatePasswordArgs = {
+    formData: NewPasswordForm;
+    token: string;
+}
 
 export async function createAccount(formData: userRegistrationForm) {
     try {
@@ -9,7 +14,7 @@ export async function createAccount(formData: userRegistrationForm) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -21,7 +26,7 @@ export async function confirmAccount(formData: ConfirmToken) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -33,7 +38,7 @@ export async function requestConfirmationCode(formData: RequestConfirmationCodeF
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -46,7 +51,7 @@ export async function authenticateUser(formData: UserLoginForm) {
         return data 
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -58,7 +63,7 @@ export async function forgotPassword(formData: ForgotPasswordForm) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -70,20 +75,21 @@ export async function validateToken(formData: ConfirmToken) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
 
-export async function updatePasswordWithToken({formData, token}: {formData: NewPasswordForm, token: ConfirmToken['token']}) {
+export async function updatePasswordWithToken({ formData, token }: UpdatePasswordArgs) {
     try {
-        const url = `/auth/update-password/${token}`
-        const {data} = await api.post<string>(url, formData)
-        return data
+        const url = `/auth/update-password/${token}`; 
+        const { data } = await api.post<string>(url, formData); 
+        return data;
     } catch (error) {
-        if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error); 
         }
+        throw new Error('Hubo un error al actualizar el password');
     }
 }
 
@@ -96,7 +102,7 @@ export async function getUser() {
         }
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
@@ -108,7 +114,7 @@ export async function checkPassword(formData: CheckPasswordForm) {
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
-            throw new Error(error.response.data.error)
+            throw new Error(error.response.data)
         }
     }
 }
